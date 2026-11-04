@@ -1,0 +1,11 @@
+{
+  "name": "rsu-in-azione",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/session-api.test.mjs"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

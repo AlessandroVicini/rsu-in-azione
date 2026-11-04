@@ -1,0 +1,38 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {readFileSync,readdirSync} from 'node:fs';
+import {handleAPI} from '../lib/session-api.mjs';
+test('Shared classroom: authorization, independent teams, saves, phase gates, pause, messages and conflicts',async()=>{
+ const sql=new DatabaseSync(':memory:');for(const f of readdirSync(new URL('../drizzle/',import.meta.url)).filter(f=>f.endsWith('.sql')).sort())sql.exec(readFileSync(new URL('../drizzle/'+f,import.meta.url),'utf8'));
+ const db={prepare(query){const statement=sql.prepare(query);return {bind(...args){return {first:async()=>statement.get(...args),all:async()=>({results:statement.all(...args)}),run:async()=>({meta:statement.run(...args)})};}};}};
+ const host='a'.repeat(64),a='b'.repeat(64),b='c'.repeat(64);
+ async function call(path,method='GET',data,key,origin){const headers={'Content-Type':'application/json'};if(key)headers.Authorization='Bearer '+key;if(origin)headers.Origin=origin;const res=await handleAPI(new Request('https://example.test/api/rsu'+path,{method,headers,body:data===undefined?undefined:JSON.stringify(data)}),db);return {status:res.status,headers:res.headers,data:res.status===204?null:await res.json()};}
+ let res=await call('/sessions','POST',{token:host,title:'Test RSU'});assert.equal(res.status,201);const code=res.data.room.code;const path=x=>'/sessions/'+code+'/'+x;
+ assert.equal((await call('/sessions','POST',{token:host,title:'Test RSU'})).data.room.code,code);
+ const joined=await call(path('join'),'POST',{token:a,name:'Squadra A',sector:'cemento'});assert.equal(joined.status,201);let t=joined.data.team;
+ const other=await call(path('join'),'POST',{token:b,name:'Squadra B',sector:'legno'});assert.equal(other.status,201);
+ assert.equal((await call(path('join'),'POST',{token:a,name:'Squadra A',sector:'cemento'})).data.team.id,t.id);
+ assert.equal((await call(path('join'),'POST',{token:'d'.repeat(64),name:'Squadra A',sector:'cemento'})).status,409);
+ assert.equal((await call(path('host'),'GET',undefined,a)).status,403);
+ assert.equal((await call(path('team'),'GET',undefined,'no')).status,401);
+ t.state.draft={risposta:'Bozza condivisa'};res=await call(path('team'),'PUT',{revision:0,state:t.state},a);assert.equal(res.status,200);t=res.data.team;
+ assert.equal((await call(path('host'),'GET',undefined,host)).data.teams[0].state.draft.risposta,'Bozza condivisa');
+ assert.deepEqual((await call(path('team'),'GET',undefined,b)).data.team.state.draft,{});
+ assert.equal((await call(path('team'),'PUT',{revision:0,state:t.state},a)).status,409);
+ const future=structuredClone(t.state);future.piattaforma={mandato:'Test'};assert.equal((await call(path('team'),'PUT',{revision:1,state:future},a)).status,423);
+ t.state.answers=Array.from({length:3},()=>({risposta:'Risposta',fonte:'CCNL',seguito:'Verifica'}));t.state.page='mandato';t.state.draft={};res=await call(path('team'),'PUT',{revision:t.revision,state:t.state},a);assert.equal(res.status,200);t=res.data.team;
+ await call(path('host'),'PUT',{phase:2,paused:false,closed:false},host);
+ t.state.piattaforma={mandato:'Test'};t.state.offerte=[];t.state.page='tavolo';res=await call(path('team'),'PUT',{revision:t.revision,state:t.state},a);assert.equal(res.status,200);t=res.data.team;
+ await call(path('host'),'PUT',{phase:2,paused:true,closed:false},host);assert.equal((await call(path('team'),'PUT',{revision:t.revision,state:t.state},a)).status,423);
+ await call(path('host'),'PUT',{phase:2,paused:false,closed:false},host);
+ assert.equal((await call(path('message'),'POST',{teamId:t.id,text:'Imprevisto'},host)).status,200);
+ assert.equal((await call(path('team'),'GET',undefined,a)).data.team.messages[0].text,'Imprevisto');assert.equal((await call(path('team'),'GET',undefined,b)).data.team.messages.length,0);
+ assert.equal((await call(path('feedback'),'PUT',{teamId:t.id,feedback:'Buon uso delle fonti'},host)).status,200);
+ assert.equal((await call(path('team'),'GET',undefined,a)).data.team.feedback,'Buon uso delle fonti');
+ assert.equal((await call('/health','GET',undefined,undefined,'https://foreign.test')).status,403);
+ assert.equal((await call('/health','OPTIONS',undefined,undefined,'https://alessandrovicini.github.io')).headers.get('Access-Control-Allow-Origin'),'https://alessandrovicini.github.io');
+ await call(path('host'),'PUT',{phase:3,paused:false,closed:true},host);assert.equal((await call(path('join'),'POST',{token:'e'.repeat(64),name:'Nuova',sector:'legno'})).status,423);
+ const room2=(await call('/sessions','POST',{token:'f'.repeat(64),title:'Altra aula'})).data.room.code;assert.equal((await call('/sessions/'+room2+'/team','GET',undefined,a)).status,403);
+ assert.equal((await call(path('host'),'GET',undefined,host)).data.teams.length,2);
+});

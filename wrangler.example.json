@@ -1,0 +1,13 @@
+{
+  "name": "rsu-sessioni",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-05-15",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "rsu-sessioni",
+      "database_id": "SOSTITUIRE_CON_ID_DATABASE",
+      "migrations_dir": "drizzle"
+    }
+  ]
+}
