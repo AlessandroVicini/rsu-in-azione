@@ -63,7 +63,7 @@ function stage(s){
  const d=choose(s);const title=['','Sportello RSU','Trattativa aziendale','Assemblea dei lavoratori'][d.phase];
  return `<section class="rsu-art-stage rsu-art-raster" aria-label="Illustrazioni del gioco"><div class="rsu-art-top"><strong>${d.phase} · ${esc(title)}</strong><span>${esc(sectorNames[s.sec]||s.sec)}</span></div>${illustration(d.key,d.index,d.rows)}<div class="rsu-art-bottom"><div class="rsu-art-description"><strong>${esc(d.headline)}</strong><small>${esc(d.detail)}</small></div><div class="rsu-art-meters">${d.metrics.map(meter).join('')}</div></div></section>`;
 }
-function home(){return art().verde?`<div class="rsu-raster-home" style="background-image:url('${art().verde}')" role="img" aria-label="Illustrazioni originali di RSU in Azione"></div>`:'';}
+function home(){return art().colloqui?`<div class="rsu-raster-home" style="background-image:url('${art().colloqui}');background-size:200% 300%;background-position:100% 100%" role="img" aria-label="Lavoratori e delegati RSU illustrati"></div>`:'';}
 function installBrand(){
  if(!art().logo)return;
  const mark=document.querySelector('.mark');
