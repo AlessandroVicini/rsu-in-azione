@@ -22,6 +22,39 @@ function source(sec){return '<a href="'+(location.hostname.endsWith('github.io')
 function modal(title,body){$('dt').textContent=title;$('dc').innerHTML=body;if(!$('dlg').open)$('dlg').showModal();$('dlg').scrollTop=0;}
 function download(data,name){const url=URL.createObjectURL(new Blob([data],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);}
 function snapshot(){download(JSON.stringify(g,null,2),'Fascicolo-RSU-'+g.team.replace(/[^a-z0-9à-ù_-]/gi,'-')+'.json');}
+
+/* Nuova partita individuale: progressi eliminati solo dopo conferma esplicita. */
+function ricominciaDaZero(){
+ if(window.RSUOnline?.isActive?.()){
+  modal('Partita individuale','<p>Sei collegato a una sessione online. Per ricominciare individualmente, esci prima dalla sessione tramite «Sessione online» → «Esci dalla sessione».</p>');
+  return;
+ }
+ const settore=g?.sec;
+ try{localStorage.removeItem(KEY);}catch{
+  modal('Salvataggio del browser','<p>Non è stato possibile cancellare la vecchia partita dalla memoria del browser. Riprova oppure verifica le impostazioni del browser.</p>');
+  return;
+ }
+ g=null;
+ home=true;
+ setupName='';
+ if(settore&&SECT.includes(settore))picked=settore;
+ if($('dlg').open)$('dlg').close();
+ render();
+ window.scrollTo(0,0);
+}
+function nuovaPartita(){
+ if(window.RSUOnline?.isActive?.()){
+  modal('Partita individuale','<p>Questa sessione è condivisa con altre squadre. Per non interferire con il lavoro online, esci prima dalla sessione tramite il pulsante «Sessione online».</p>');
+  return;
+ }
+ if(!g){home=true;setupName='';render();window.scrollTo(0,0);return;}
+ modal('Nuova partita da zero','<p>Vuoi cancellare la partita <b>'+esc(g.team)+'</b> ('+esc(SHORT[g.sec])+') e ricominciare dalla fase 1?</p><p>Le risposte, le trattative e il voto salvati su questo dispositivo andranno persi. Puoi prima scaricare il fascicolo della partita attuale.</p><div class="actions restart-dialog-actions"><button class="primary" type="button" id="restart-export">Esporta il fascicolo e ricomincia</button><button class="quiet" type="button" id="restart-delete">Ricomincia senza esportare</button><button class="quiet" type="button" id="restart-cancel">Annulla</button></div>');
+ $('restart-export').onclick=()=>{snapshot();ricominciaDaZero();};
+ $('restart-delete').onclick=ricominciaDaZero;
+ $('restart-cancel').onclick=()=>$('dlg').close();
+ $('restart-cancel').focus();
+}
+
 function wireForm(done){const f=$('play');for(const el of f.elements){if(el.name&&Object.hasOwn(g.draft,el.name))el.value=g.draft[el.name];}
 f.oninput=()=>{g.draft=Object.fromEntries(new FormData(f));persist();};f.onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));for(const el of f.elements){if(el.required&&!String(el.value).trim()){el.focus();return;}}done(d);};}
 function screen(title,body,side){const n={colloquio:0,mandato:1,tavolo:1,esito:1,assemblea:2,dibattito:2,voto:2,fine:2}[g.page];$('app').innerHTML='<div class="introbar"><div><span class="eyebrow">'+esc(g.team)+' · '+esc(SHORT[g.sec])+'</span><h2>'+esc(sc().impresa)+'</h2></div><img alt="" src="icona-'+g.sec+'.svg"></div><div class="steps">'+PHASES.map((p,i)=>'<span class="step '+(i===n?'active':'')+'">0'+(i+1)+' · '+p+'</span>').join('')+'</div>'+(window.RSUArt?.stage?.(g)||'')+'<div class="cols"><div class="panel feature"><h2>'+esc(title)+'</h2>'+body+'</div><aside>'+side+'</aside></div>';}
@@ -82,4 +115,4 @@ panel('Raccogli i fascicoli','<p>Ogni squadra esporta il fascicolo dalla propria
 const sel=$('dc').querySelector('[name=regsec]');sel.value=g?.sec||picked;function keys(){$('keys').innerHTML=CASI[sel.value].map(c=>'<details><summary>'+esc(c.nome+' · '+c.tema)+'</summary><p>'+esc(c.riscontro)+'</p><small>'+esc(c.fonte)+'</small></details>').join('');}sel.onchange=keys;keys();if(g){$('addevent').onclick=()=>{const v=$('eventtext').value.trim();if(v){g.eventi.push(v);persist();$('eventtext').value='';$('teacherstatus').textContent='Imprevisto inserito nel fascicolo e al tavolo.';render();}};$('addfeed').onclick=()=>{g.feedback=$('feedback').value.trim();persist();$('teacherstatus').textContent='Osservazioni salvate nel fascicolo.';};}
 function showReports(){$('reports').innerHTML=imports.map(x=>'<details><summary>'+esc(x.title)+'</summary><p class="report">'+esc(x.body)+'</p></details>').join('');}showReports();$('imports').onchange=async e=>{let errors=[];for(const f of e.target.files){try{if(f.size>2000000)throw 0;const s=JSON.parse(await f.text());if(s.version!==1||!SECT.includes(s.sec)||!Array.isArray(s.answers)||typeof s.team!=='string')throw 0;const body=report(s)+chiaveRegia(s);let title=s.team+' · '+SHORT[s.sec];imports=imports.filter(x=>x.title!==title);imports.push({title,body});}catch{errors.push(f.name);}}showReports();$('importstatus').textContent=errors.length?'File non leggibili: '+errors.join(', '):'Fascicoli disponibili per il confronto.';};}
 function render(){renderGame();window.RSUOnline?.refreshUI();}
-$('regia').onclick=regia;$('fascicolo').onclick=showDossier;$('close').onclick=()=>$('dlg').close();$('brand').onclick=e=>{e.preventDefault();home=true;render();};render();
+$('nuova-partita').onclick=nuovaPartita;$('regia').onclick=regia;$('fascicolo').onclick=showDossier;$('close').onclick=()=>$('dlg').close();$('brand').onclick=e=>{e.preventDefault();home=true;render();};render();
