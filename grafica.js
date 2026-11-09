@@ -58,9 +58,32 @@ function illustration(key,index,rows){
  return `<div class="rsu-raster-illustration" role="img" aria-label="Scena illustrata: ${esc(key)}" style="background-image:url('${src}');${style}"></div>`;
 }
 function meter(a){const [label,pct,extra]=a;return `<div class="rsu-meter"><div class="rsu-meter-meta"><strong>${esc(label)}</strong><span>${esc(extra)}</span></div><div class="rsu-meter-track" role="meter" aria-label="${esc(label)}" aria-valuenow="${clamp(pct)}" aria-valuemin="0" aria-valuemax="100"><div class="rsu-meter-fill" style="width:${clamp(pct)}%"></div></div></div>`;}
+function scenaColloquio(s,d){
+ const lib=window.RSUColloqui||{};
+ const i=Math.max(0,Math.min(2,s.answers?.length||0));
+ const caso=window.CASI?.[s.sec]?.[i];
+ const latoL=lib.workers?.[s.sec]?.[i];
+ const persona=lib.rotazione?.[s.sec]?.[i];
+ const latoR=lib.delegati?.[persona];
+ if(!caso||!latoL||!latoR)return '';
+ const pronomi={marco:'Marco · delegato RSU',elena:'Elena · delegata RSU',paolo:'Paolo · delegato RSU',sara:'Sara · delegata RSU'};
+ const intro=s.dialoghi?.includes(i)?'La richiesta è stata approfondita: confrontate i fatti e i documenti.':'Ascoltate il problema prima di formulare una risposta.';
+ return '<section class="rsu-art-stage rsu-colloquio-specifico" aria-label="Colloquio illustrato con '+esc(caso.nome)+'">'+
+ '<div class="rsu-art-top"><strong>1 · Colloquio con '+esc(caso.nome)+'</strong><span>'+esc(sectorNames[s.sec]||s.sec)+'</span></div>'+
+ '<div class="rsu-duo-illustrazioni">'+
+ '<figure class="rsu-figura-lavoratore"><img src="'+latoL+'" alt="Illustrazione del problema di '+esc(caso.nome)+' nel settore '+esc(sectorNames[s.sec])+'"><figcaption><b>'+esc(caso.nome)+'</b><span>'+esc(caso.tema)+'</span></figcaption></figure>'+
+ '<figure class="rsu-figura-delegato"><img src="'+latoR+'" alt="'+esc(pronomi[persona]||'Delegato RSU')+' in ascolto attento e professionale"><figcaption><b>'+esc(pronomi[persona]||'Delegato RSU')+'</b><span>Ascolto e verifica</span></figcaption></figure>'+
+ '</div><div class="rsu-art-bottom"><div class="rsu-art-description"><strong>'+esc(caso.ruolo)+'</strong><small>'+esc(intro)+'</small></div>'+
+ '<div class="rsu-art-meters">'+d.metrics.map(meter).join('')+'</div></div></section>';
+}
 function stage(s){
  if(!s?.sec)return '';
  const d=choose(s);const title=['','Sportello RSU','Trattativa aziendale','Assemblea dei lavoratori'][d.phase];
+ if(s.page==='colloquio'){
+  const artwork=scenaColloquio(s,d);
+  if(artwork)return artwork;
+ }
+
  return `<section class="rsu-art-stage rsu-art-raster" aria-label="Illustrazioni del gioco"><div class="rsu-art-top"><strong>${d.phase} · ${esc(title)}</strong><span>${esc(sectorNames[s.sec]||s.sec)}</span></div>${illustration(d.key,d.index,d.rows)}<div class="rsu-art-bottom"><div class="rsu-art-description"><strong>${esc(d.headline)}</strong><small>${esc(d.detail)}</small></div><div class="rsu-art-meters">${d.metrics.map(meter).join('')}</div></div></section>`;
 }
 function home(){return art().colloqui?`<div class="rsu-raster-home" style="background-image:url('${art().colloqui}');background-size:200% 300%;background-position:100% 100%" role="img" aria-label="Lavoratori e delegati RSU illustrati"></div>`:'';}
