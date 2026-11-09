@@ -49,3 +49,10 @@
 @media (min-width:1100px){.rsu-raster-illustration{max-height:470px}}
 @media (max-width:760px){.mark.rsu-logo-mark img{width:55px;height:49px}.hero .rsu-home-graphic,.rsu-raster-home{min-height:200px}.rsu-art-raster .rsu-art-bottom{grid-template-columns:1fr;gap:10px}}
 @media (prefers-reduced-motion:reduce){.rsu-meter-fill{transition:none!important}}
+
+/* Riavvio individuale, verde e accessibile anche da mobile */
+#nuova-partita{border-color:#138055;color:#095736;white-space:nowrap;background:#e8f7ed}
+#nuova-partita:hover{background:#d3efdc;border-color:#087646}
+.restart-dialog-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+.restart-dialog-actions button{min-height:43px}
+@media(max-width:700px){.restart-dialog-actions{align-items:stretch;flex-direction:column}.restart-dialog-actions button{width:100%}}
