@@ -56,3 +56,21 @@
 .restart-dialog-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px}
 .restart-dialog-actions button{min-height:43px}
 @media(max-width:700px){.restart-dialog-actions{align-items:stretch;flex-direction:column}.restart-dialog-actions button{width:100%}}
+
+/* Colloqui individuali — tavole narrative originali e squadra RSU ricorrente */
+.rsu-colloquio-specifico{overflow:hidden}
+.rsu-duo-illustrazioni{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:3px;background:#0e7548}
+.rsu-duo-illustrazioni figure{margin:0;min-width:0;position:relative;overflow:hidden;background:#e9f2eb}
+.rsu-duo-illustrazioni img{display:block;width:100%;height:285px;object-fit:cover}
+.rsu-figura-lavoratore img{object-position:40% center}
+.rsu-figura-delegato img{object-position:50% 40%}
+.rsu-duo-illustrazioni figcaption{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#eff9f0;color:#164f37;font-size:13px;padding:9px 12px;min-height:53px}
+.rsu-duo-illustrazioni figcaption b{font-size:14px}
+.rsu-duo-illustrazioni figcaption span{font-weight:550}
+.rsu-figura-delegato figcaption{background:#d9efe1}
+@media(max-width:700px){
+ .rsu-duo-illustrazioni{grid-template-columns:minmax(0,1fr)}
+ .rsu-figura-lavoratore img{height:195px;object-position:40% 42%}
+ .rsu-figura-delegato img{height:156px;object-position:50% 33%}
+ .rsu-duo-illustrazioni figcaption{min-height:0;padding:7px 11px;font-size:12px}
+}
