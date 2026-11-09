@@ -53,7 +53,8 @@ function illustration(key,index,rows){
  const x=index%2,y=Math.floor(index/2);
  const bx=x===0?'0%':'100%';
  const by=rows===1?'0%':(100*y/(rows-1)).toFixed(4)+'%';
- const style=rows===1?'background-size:cover;background-position:center;':`background-size:200% ${rows*100}%;background-position:${bx} ${by};`;
+ const ratio=rows===4?'8/3':rows===1?'1000/348':'2/1';
+ const style=rows===1?`aspect-ratio:${ratio};background-size:cover;background-position:center;`:`aspect-ratio:${ratio};background-size:200% ${rows*100}%;background-position:${bx} ${by};`;
  return `<div class="rsu-raster-illustration" role="img" aria-label="Scena illustrata: ${esc(key)}" style="background-image:url('${src}');${style}"></div>`;
 }
 function meter(a){const [label,pct,extra]=a;return `<div class="rsu-meter"><div class="rsu-meter-meta"><strong>${esc(label)}</strong><span>${esc(extra)}</span></div><div class="rsu-meter-track" role="meter" aria-label="${esc(label)}" aria-valuenow="${clamp(pct)}" aria-valuemin="0" aria-valuemax="100"><div class="rsu-meter-fill" style="width:${clamp(pct)}%"></div></div></div>`;}
