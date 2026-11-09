@@ -70,6 +70,17 @@ function scenaColloquio(s,d){
   <div class="rsu-art-bottom"><div class="rsu-art-description"><strong>${esc(caso.tema)}</strong><small>${esc(caso.ruolo)}</small></div>
   <div class="rsu-art-meters">${d.metrics.map(meter).join('')}</div></div></section>`;
 }
+function reazioneSala(s){
+ if(!['dibattito','voto','fine'].includes(s.page))return '';
+ const esiti={approva:[19,'Approvazione'],riapre:[18,'Richiesta di modifica'],respinge:[13,'Dissenso'],rinvia:[4,'Incertezza']};
+ const risposte={Assertiva:[[17,'Partecipazione'],[14,'Disponibilità al confronto'],[16,'Ascolto']],Parziale:[[3,'Dubbio'],[4,'Perplessità'],[5,'Richiesta di chiarimento']],Critica:[[13,'Irritazione'],[12,'Tensione'],[4,'Esitazione']]};
+ const interventi=s.interventi||[];
+ const lettura=interventi.at(-1)?.lettura?.split(' · ')[0];
+ const stato=(s.page!=='dibattito' && esiti[s.voto?.scelta]) || risposte[lettura]?.[interventi.length-1];
+ if(!stato)return '';
+ const [i,label]=stato;
+ return `<div class="reazione-sala"><span aria-hidden="true" style="background-position:${(i%5)*25}% ${Math.floor(i/5)*100/3}%"></span><div><small>Reazione in sala</small><strong>${label}</strong></div></div>`;
+}
 function stage(s){
  if(!s?.sec)return '';
  const d=choose(s);const title=['','Sportello RSU','Trattativa aziendale','Assemblea dei lavoratori'][d.phase];
@@ -78,7 +89,7 @@ function stage(s){
   if(artwork)return artwork;
  }
 
- return `<section class="rsu-art-stage rsu-art-raster" aria-label="Illustrazioni del gioco"><div class="rsu-art-top"><strong>${d.phase} · ${esc(title)}</strong><span>${esc(sectorNames[s.sec]||s.sec)}</span></div>${illustration(d.key,d.index,d.rows)}<div class="rsu-art-bottom"><div class="rsu-art-description"><strong>${esc(d.headline)}</strong><small>${esc(d.detail)}</small></div><div class="rsu-art-meters">${d.metrics.map(meter).join('')}</div></div></section>`;
+ return `<section class="rsu-art-stage rsu-art-raster" aria-label="Illustrazioni del gioco"><div class="rsu-art-top"><strong>${d.phase} · ${esc(title)}</strong><span>${esc(sectorNames[s.sec]||s.sec)}</span></div>${illustration(d.key,d.index,d.rows)}${reazioneSala(s)}<div class="rsu-art-bottom"><div class="rsu-art-description"><strong>${esc(d.headline)}</strong><small>${esc(d.detail)}</small></div><div class="rsu-art-meters">${d.metrics.map(meter).join('')}</div></div></section>`;
 }
 function home(){return art().colloqui?`<div class="rsu-raster-home" style="background-image:url('${art().colloqui}');background-size:200% 300%;background-position:100% 100%" role="img" aria-label="Lavoratori e delegati RSU illustrati"></div>`:'';}
 function installBrand(){

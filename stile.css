@@ -65,3 +65,14 @@
  object-fit:contain;
  background:#f3f4ed;
 }
+
+.reazione-sala{display:flex;align-items:center;gap:.8rem;padding:.55rem 1rem;background:#f3f7ef;color:#104d37}
+.reazione-sala span{flex:none;width:64px;height:60px;background-image:url('grafica/reazioni.webp');background-size:500% 400%;border-radius:50%}
+.reazione-sala small,.reazione-sala strong{display:block}
+.sectors{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sector{padding:0 0 12px;overflow:hidden;gap:4px}
+.sector img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;margin-bottom:4px}
+.sector b,.sector span{margin-inline:12px}
+.sector[aria-pressed=true]:after{display:grid;place-items:center;top:6px;right:6px;width:26px;height:26px;border-radius:50%;color:white;background:#0d5940;box-shadow:0 0 0 2px white}
+.introbar img.stabilimento-miniatura{object-fit:cover;border-radius:6px}
+@media(max-width:760px){.sectors{grid-template-columns:repeat(2,minmax(0,1fr))}}
