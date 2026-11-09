@@ -2,3 +2,30 @@
 .livebar{margin:24px auto;max-width:1180px;padding:20px 24px;background:#edf5ef;border:1px solid #bacfc4;border-radius:14px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}.livebar p{margin:6px 0}.livebar>.notice{flex-basis:100%}.livebar .tag{margin-left:10px}#teamcards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:20px 0}#phasebuttons [aria-pressed=true]{background:#103f3c;color:white}#live-draft{overflow-wrap:anywhere}.report{white-space:pre-wrap;overflow-wrap:anywhere}button:disabled,input:disabled,textarea:disabled,select:disabled{opacity:.6;cursor:not-allowed}#dlg{max-width:1100px;width:90vw}#live-report{font-size:.95rem}@media(max-width:700px){.livebar{margin:12px;padding:16px}header{flex-wrap:wrap}header nav{flex-wrap:wrap}.livebar .actions{gap:8px}}
 .scelta{display:flex;align-items:flex-start;gap:.7rem;margin:.6rem 0;font-weight:500}.scelta input{width:1.1rem;height:1.1rem;flex:none}.feature fieldset{border:1px solid #bccfc8;border-radius:8px;margin:1rem 0;padding:1rem}.feature details{padding:.8rem;border-bottom:1px solid #cad8d1}.feature summary{cursor:pointer;font-weight:700}#errore{color:#982a21;font-weight:700}
 .due-giri{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}.due-giri p{white-space:pre-wrap;overflow-wrap:anywhere}
+/* RSU in Azione: identità verde, rosso solo per contestazioni pretestuose */
+:root{--ink:#074c32;--mut:#45665a;--bg:#f2f7f0;--paper:#fff;--line:#c2dccd;--accent:#5fc28b;--soft:#e2f3e9}
+.mark{background:#078047;border-bottom-color:#6cc895}
+.hero{background:linear-gradient(126deg,#075b3a,#14824b)}
+.hero .eyebrow{color:#dcf7e6}
+.hero .rsu-home-graphic{min-height:235px;height:100%;overflow:hidden}
+.hero .rsu-home-graphic svg{width:100%;height:100%;display:block;object-fit:cover}
+.rsu-art-stage{border:1px solid #b1d8c3;border-radius:16px;background:#fff;box-shadow:0 6px 25px #195b3630;overflow:hidden;margin:13px 0 22px}
+.rsu-art-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;background:#087345;color:#fff;padding:8px 15px}
+.rsu-art-stage-pill{font-weight:850;letter-spacing:.015em}
+.rsu-art-sector{font-size:12px;opacity:.95;font-weight:650}
+.rsu-art-visual{background:#e0f1e8;position:relative;overflow:hidden}
+.rsu-art-visual svg{display:block;width:100%;max-height:330px;min-height:180px}
+.rsu-art-bottom{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(230px,1fr);gap:18px;padding:15px 18px;background:#f8fcf8}
+.rsu-art-description{display:flex;flex-direction:column;justify-content:center;gap:4px;line-height:1.45}
+.rsu-art-description strong{color:#064c31;font-size:16px}
+.rsu-art-description small{font-size:12px;color:#547268}
+.rsu-art-meters{display:grid;align-content:center;gap:9px}
+.rsu-meter-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:3px;font-size:11px;color:#275747}
+.rsu-meter-meta strong{font-weight:750}
+.rsu-meter-track{width:100%;height:9px;overflow:hidden;border-radius:20px;background:#d6e6dc;box-shadow:inset 0 1px 2px #0001}
+.rsu-meter-fill{height:100%;border-radius:20px;transition:width .4s ease-out}
+.rsu-art-result{font-size:12px;font-weight:800;margin-top:6px;width:fit-content;border-radius:20px;padding:5px 11px}
+.rsu-art-result.positive{background:#d5f4db;color:#075d31}
+.rsu-art-result.needs-review{background:#fff0d1;color:#84500c}
+@media(max-width:760px){.hero .rsu-home-graphic{min-height:185px}.rsu-art-bottom{grid-template-columns:1fr}.rsu-art-visual svg{min-height:140px}.rsu-art-meters{gap:6px}}
+@media(prefers-reduced-motion:reduce){.rsu-meter-fill{transition:none}}
