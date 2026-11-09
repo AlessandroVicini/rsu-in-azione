@@ -74,3 +74,19 @@
  .rsu-figura-delegato img{height:156px;object-position:50% 33%}
  .rsu-duo-illustrazioni figcaption{min-height:0;padding:7px 11px;font-size:12px}
 }
+
+/* Revisione colloqui: figure integrate e compatte anche su schermi stretti.
+   Le fotografie e le finte schermate generate non vengono utilizzate. */
+.rsu-colloquio-specifico .rsu-duo-illustrazioni figure{background:#e7f0e7}
+.rsu-colloquio-specifico .rsu-visual-nota{display:block;margin-top:4px;color:#45675a}
+.rsu-colloquio-specifico .rsu-duo-illustrazioni img{object-fit:cover}
+@media(max-width:700px){
+ .rsu-colloquio-specifico .rsu-duo-illustrazioni{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr);gap:2px}
+ .rsu-colloquio-specifico .rsu-duo-illustrazioni figure{min-width:0}
+ .rsu-colloquio-specifico .rsu-duo-illustrazioni img{height:180px}
+ .rsu-colloquio-specifico .rsu-figura-lavoratore img{object-position:48% 34%}
+ .rsu-colloquio-specifico .rsu-figura-delegato img{object-position:50% 25%}
+ .rsu-colloquio-specifico .rsu-duo-illustrazioni figcaption{display:block;padding:7px 8px;min-height:59px;line-height:1.25}
+ .rsu-colloquio-specifico .rsu-duo-illustrazioni figcaption b,.rsu-colloquio-specifico .rsu-duo-illustrazioni figcaption span{display:block;font-size:11px}
+ .rsu-colloquio-specifico .rsu-art-bottom{padding:12px 14px}
+}
