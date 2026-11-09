@@ -31,6 +31,7 @@
   finally{saving=false;refreshUI();}
  }
  function refreshUI(){
+  if($('nuova-partita'))$('nuova-partita').hidden=Boolean(auth&&ready);
   $('regia').hidden=auth?.role==='team';
   if(!auth||!ready){$('livebar')?.remove();return;}
   let bar=$('livebar');if(!bar){bar=document.createElement('section');bar.id='livebar';bar.className='livebar';$('app').before(bar);}
@@ -115,7 +116,7 @@
  const nav=document.querySelector('header nav');nav.insertAdjacentHTML('afterbegin','<button class="primary" id="online">Sessione online</button>');$('online').onclick=lobby;
  $('regia').onclick=()=>auth?.role==='host'?dashboard():regia();
  $('brand').onclick=e=>{e.preventDefault();if(auth?.role==='host')dashboard();else{home=!auth;view='game';render();}};
- window.RSUOnline={queueState,refreshUI};
+ window.RSUOnline={queueState,refreshUI,isActive:()=>Boolean(auth&&ready)};
  window.addEventListener('beforeunload',e=>{if(dirty!==acked){e.preventDefault();e.returnValue='';}});
  window.addEventListener('online',poll);setInterval(poll,4000);
  let remembered;try{remembered=JSON.parse(sessionStorage.getItem(KEYLIVE));}catch{}
