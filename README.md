@@ -15,8 +15,8 @@ Le risposte si sincronizzano automaticamente. Se la connessione si interrompe, l
 ## Percorso didattico
 
 - **Colloqui**: ascoltare tre colleghi, consultare CCNL e guida cartacea, motivare risposta e seguito.
-- **Trattativa**: costruire il mandato, negoziare due priorità, gestire dati e contropartite, verbalizzare accordo o stallo.
-- **Assemblea**: presentare il risultato, rispondere agli stessi colleghi e raccogliere la decisione; possibile riapertura del confronto.
+- **Trattativa**: comporre la piattaforma, motivare ogni proposta e ogni replica nei due giri, confrontare le risposte aziendali e redigere il verbale.
+- **Assemblea**: affrontare le contestazioni dei reparti. Il gioco simula lo scrutinio e, quando serve, il ritorno al tavolo e il secondo voto.
 
 Aziende, eventi e interlocutori sono simulati. Il formatore valuta la qualità delle argomentazioni: le reazioni dell'azienda seguono regole didattiche, non una valutazione automatica dei diritti. La guida può essere usata su carta; le scansioni potranno essere integrate in seguito. Il CCNL legno fornito riguarda il 2019–2022: verificare i rinnovi prima dell'applicazione a casi attuali.
 

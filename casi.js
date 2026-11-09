@@ -118,3 +118,7 @@ window.CASI = {
     }
   ]
 };
+
+Object.assign(CASI.legno[0], {"tema": "Sabati e recuperi", "domanda": "Ci chiedono cinque ore il sabato per la commessa anticipata. Come capisco se le ore sono flessibilità o straordinario e quando le recupererò?", "indizio": "Quali date vi hanno comunicato?", "dettaglio": "Per ora abbiamo soltanto le date dei sabati.", "fonte": "Scheda Flessibilità Legno · art. 19 CCNL in dotazione", "riscontro": "Ricostruire le ore aggiuntive e chiedere il programma dei recuperi."});
+Object.assign(CASI.legno[1], {"tema": "Impedimento e reparti coinvolti", "domanda": "Ho un corso già fissato il sabato. Devo trovarmi un cambio da sola? E il mio ufficio è davvero coinvolto, se i disegni del lotto sono già pronti?", "indizio": "Avete un calendario del corso?", "dettaglio": "Ho le date del corso. Per il lotto abbiamo già consegnato i disegni.", "fonte": "Scheda Flessibilità Legno · art. 19 CCNL in dotazione", "riscontro": "Raccogliere l’impedimento e verificare il perimetro della richiesta aziendale."});
+Object.assign(CASI.legno[2], {"tema": "Recupero tra due reparti", "domanda": "Il mercoledì di recupero risulta libero al montaggio ma il magazzino mi aspetta al carico. Quale calendario seguo e come viene registrata la giornata?", "indizio": "I due calendari coincidono?", "dettaglio": "Al montaggio la giornata è libera. Al carico risulto in servizio.", "fonte": "Scheda Flessibilità Legno · art. 19 CCNL in dotazione", "riscontro": "Confrontare i calendari e chiedere una registrazione coerente del recupero."});

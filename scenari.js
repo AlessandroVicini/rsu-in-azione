@@ -20,33 +20,33 @@ window.SCENARI = {
     etichetta: "Cemento, calce, gesso e malte",
     impresa: "Cementeria del Guado",
     luogo: "Sala controllo, macinazione, manutenzione e insacco",
-    profilo: "Azienda immaginaria. Lo stabilimento deve rinnovare il sistema di supervisione degli impianti. Il personale di turno chiede accesso alla formazione e criteri trasparenti per il premio di risultato.",
+    profilo: "126 persone, di cui 38 a turni in sala controllo e macinazione. L’azienda rinnova il sistema di supervisione. Dei 18 addetti formati, tre appartengono alla squadra notturna. Il collaudo viene anticipato e il fornitore garantisce quattro giornate di istruzione.",
     dati: [
       "Lo stabilimento occupa 126 persone, 38 delle quali operano a turni in sala controllo e macinazione. Fonte simulata: prospetto organici.",
       "Dei 18 addetti formati sul nuovo sistema, solo 3 appartengono alla squadra notturna. Fonte simulata: registro formazione.",
       "Nell’ultimo semestre ci sono state 74 ore di fermata non programmata, 26 causate da un’interruzione della fornitura elettrica esterna. Fonte simulata: diario impianto."
     ],
-    precedente: "Nell’accordo aziendale immaginario in scadenza, il premio usa come indicatore le ore di disponibilità dell’impianto. Il prospetto annuale riporta il totale delle fermate senza distinguerne le cause.",
+    precedente: "Il prospetto mensile riporta le fermate senza distinguere le cause.",
     vincolo: "La direzione vuole mantenere un indicatore di continuità produttiva e garantire la presenza di un operatore esperto in sala controllo durante ogni corso.",
     imprevisto: "Il fornitore anticipa il collaudo del nuovo sistema. Nel primo mese mette a disposizione l’istruttore soltanto in quattro giornate.",
     verifica: "A ogni trimestre direzione e RSU classificano le fermate per causa e confrontano la partecipazione ai corsi per squadra, verificando i recuperi di chi era in servizio.",
-    concessione: "La direzione propone quattro repliche del corso con sostituzioni programmate e un esame congiunto delle fermate esterne prima del calcolo del premio."
+    concessione: "La direzione accetta una prova con verifica congiunta sui dati dei reparti."
   },
   lapidei: {
     etichetta: "Materiali lapidei ed escavazione",
     impresa: "Pietre del Poggio",
     luogo: "Cava, segheria, finitura e deposito lastre",
-    profilo: "Azienda immaginaria. Cava e laboratorio lavorano su commesse diverse. Il reparto finitura riceve spesso richieste urgenti e contesta un premio legato soltanto al volume lavorato.",
+    profilo: "68 addetti tra cava, deposito e laboratorio. Le finiture speciali occupano il 34 per cento delle ore di finitura contro il 20 per cento nello stesso periodo dell’anno precedente. Nove delle ultime quindici urgenze sono arrivate a piano già pubblicato. Un lotto con venature diverse dal campione richiede lavorazioni più lente.",
     dati: [
       "I 68 addetti sono divisi tra cava e deposito (28) e laboratorio (40). Fonte simulata: scheda organici.",
       "Negli ultimi tre mesi il 34% delle ore di finitura ha riguardato pezzi speciali, contro il 20% nello stesso periodo dell’anno precedente. Fonte simulata: consuntivo commesse.",
       "Delle ultime 15 urgenze in laboratorio, 9 sono state comunicate dopo la pubblicazione del piano settimanale. Fonte simulata: registro programmazione."
     ],
-    precedente: "L’accordo aziendale immaginario in scadenza misura il premio di laboratorio in metri quadrati di lastre finite. Le lavorazioni speciali concorrono al conteggio come quelle standard.",
+    precedente: "Il piano settimanale registra i metri quadrati da finire. I pezzi speciali richiedono passaggi aggiuntivi.",
     vincolo: "La direzione accetta di discutere il crescente peso dei pezzi speciali, ma chiede un indicatore ricavabile dalle schede di commessa senza una nuova rilevazione individuale.",
     imprevisto: "Una partita di pietra presenta venature diverse dal campione. Il cliente conferma l’ordine e richiede una finitura più lenta su parte delle lastre.",
     verifica: "Su un trimestre campione, RSU e ufficio commesse simulano il risultato dei due criteri distinguendo pezzi standard e speciali. Poi discutono gli scostamenti con i reparti.",
-    concessione: "La direzione propone di sperimentare un coefficiente per le lavorazioni speciali e di fornire alla RSU i dati mensili distinti per tipo di commessa."
+    concessione: "La direzione accetta una prova con verifica congiunta sui dati dei reparti."
   },
   legno: {
     etichetta: "Legno e arredamento",
@@ -65,3 +65,5 @@ window.SCENARI = {
     concessione: "La direzione offre un secondo tutor e un calendario di affiancamento su entrambi i turni, chiedendo di collocare le prove fuori dalle giornate di spedizione."
   }
 };
+
+SCENARI.legno.profilo="La direzione chiede per la prima volta un programma di flessibilità per consegnare una commessa di mobili su misura. Nella simulazione propone cinque ore aggiuntive in alcuni sabati. I 102 addetti lavorano tra progettazione, taglio, bordatura e montaggio. Dei 16 addetti tra taglio e bordatura solo quattro hanno completato l’affiancamento sulla nuova macchina, tutti al mattino.";
