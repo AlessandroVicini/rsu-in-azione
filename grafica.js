@@ -59,25 +59,16 @@ function illustration(key,index,rows){
 }
 function meter(a){const [label,pct,extra]=a;return `<div class="rsu-meter"><div class="rsu-meter-meta"><strong>${esc(label)}</strong><span>${esc(extra)}</span></div><div class="rsu-meter-track" role="meter" aria-label="${esc(label)}" aria-valuenow="${clamp(pct)}" aria-valuemin="0" aria-valuemax="100"><div class="rsu-meter-fill" style="width:${clamp(pct)}%"></div></div></div>`;}
 function scenaColloquio(s,d){
- const lib=window.RSUColloqui||{};
- const i=Math.max(0,Math.min(2,s.answers?.length||0));
- const caso=window.CASI?.[s.sec]?.[i];
- const latoL=lib.workers?.[s.sec]?.[i];
- // Alternanza RSU con espressioni professionali: niente immagini ammiccanti
- // per turni gravosi, straordinari, riposi e altri problemi delicati.
- const referenti={cemento:['marco','elena','marco'],laterizi:['marco','elena','marco'],lapidei:['marco','elena','marco'],legno:['marco','elena','marco']};
- const persona=referenti[s.sec]?.[i]||lib.rotazione?.[s.sec]?.[i];
- const latoR=lib.delegati?.[persona];
- if(!caso||!latoL||!latoR)return '';
- const pronomi={marco:'Marco · delegato RSU',elena:'Elena · delegata RSU',paolo:'Paolo · delegato RSU',sara:'Sara · delegata RSU'};
- const intro=s.dialoghi?.includes(i)?'La richiesta è stata approfondita: confrontate i fatti e i documenti.':'Ascoltate il problema prima di formulare una risposta.';
- return '<section class="rsu-art-stage rsu-colloquio-specifico" aria-label="Colloquio illustrato con '+esc(caso.nome)+'">'+
- '<div class="rsu-art-top"><strong>1 · Colloquio con '+esc(caso.nome)+'</strong><span>'+esc(sectorNames[s.sec]||s.sec)+'</span></div>'+
- '<div class="rsu-duo-illustrazioni">'+
- '<figure class="rsu-figura-lavoratore"><img src="'+latoL+'" alt="Illustrazione del problema di '+esc(caso.nome)+' nel settore '+esc(sectorNames[s.sec])+'"><figcaption><b>'+esc(caso.nome)+'</b><span>'+esc(caso.tema)+'</span></figcaption></figure>'+
- '<figure class="rsu-figura-delegato"><img src="'+latoR+'" alt="'+esc(pronomi[persona]||'Delegato RSU')+' in ascolto attento e professionale"><figcaption><b>'+esc(pronomi[persona]||'Delegato RSU')+'</b><span>Ascolto e verifica dei fatti</span></figcaption></figure>'+
- '</div><div class="rsu-art-bottom"><div class="rsu-art-description"><strong>'+esc(caso.ruolo)+'</strong><small>'+esc(intro)+'</small><small class="rsu-visual-nota">La RSU raccoglie i fatti, consulta i documenti e non anticipa promesse.</small></div>'+
- '<div class="rsu-art-meters">'+d.metrics.map(meter).join('')+'</div></div></section>';
+ const index=s.answers?.length||0;
+ const caso=window.CASI?.[s.sec]?.[index];
+ if(!caso)return '';
+ const nome=esc(caso.nome);
+ const scena='grafica/colloqui/'+encodeURIComponent(s.sec)+'/'+encodeURIComponent(caso.nome.toLowerCase())+'.webp';
+ return `<section class="rsu-art-stage rsu-colloquio-specifico" aria-label="Colloquio con ${nome}">
+  <div class="rsu-art-top"><strong>Colloquio con ${nome}</strong><span>${esc(sectorNames[s.sec])}</span></div>
+  <img class="rsu-scena-condivisa" src="${scena}" alt="${nome} a colloquio con la RSU. ${esc(caso.tema)}.">
+  <div class="rsu-art-bottom"><div class="rsu-art-description"><strong>${esc(caso.tema)}</strong><small>${esc(caso.ruolo)}</small></div>
+  <div class="rsu-art-meters">${d.metrics.map(meter).join('')}</div></div></section>`;
 }
 function stage(s){
  if(!s?.sec)return '';
