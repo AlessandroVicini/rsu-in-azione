@@ -63,7 +63,10 @@ function scenaColloquio(s,d){
  const i=Math.max(0,Math.min(2,s.answers?.length||0));
  const caso=window.CASI?.[s.sec]?.[i];
  const latoL=lib.workers?.[s.sec]?.[i];
- const persona=lib.rotazione?.[s.sec]?.[i];
+ // Alternanza RSU con espressioni professionali: niente immagini ammiccanti
+ // per turni gravosi, straordinari, riposi e altri problemi delicati.
+ const referenti={cemento:['marco','elena','marco'],laterizi:['marco','elena','marco'],lapidei:['marco','elena','marco'],legno:['marco','elena','marco']};
+ const persona=referenti[s.sec]?.[i]||lib.rotazione?.[s.sec]?.[i];
  const latoR=lib.delegati?.[persona];
  if(!caso||!latoL||!latoR)return '';
  const pronomi={marco:'Marco · delegato RSU',elena:'Elena · delegata RSU',paolo:'Paolo · delegato RSU',sara:'Sara · delegata RSU'};
@@ -72,8 +75,8 @@ function scenaColloquio(s,d){
  '<div class="rsu-art-top"><strong>1 · Colloquio con '+esc(caso.nome)+'</strong><span>'+esc(sectorNames[s.sec]||s.sec)+'</span></div>'+
  '<div class="rsu-duo-illustrazioni">'+
  '<figure class="rsu-figura-lavoratore"><img src="'+latoL+'" alt="Illustrazione del problema di '+esc(caso.nome)+' nel settore '+esc(sectorNames[s.sec])+'"><figcaption><b>'+esc(caso.nome)+'</b><span>'+esc(caso.tema)+'</span></figcaption></figure>'+
- '<figure class="rsu-figura-delegato"><img src="'+latoR+'" alt="'+esc(pronomi[persona]||'Delegato RSU')+' in ascolto attento e professionale"><figcaption><b>'+esc(pronomi[persona]||'Delegato RSU')+'</b><span>Ascolto e verifica</span></figcaption></figure>'+
- '</div><div class="rsu-art-bottom"><div class="rsu-art-description"><strong>'+esc(caso.ruolo)+'</strong><small>'+esc(intro)+'</small></div>'+
+ '<figure class="rsu-figura-delegato"><img src="'+latoR+'" alt="'+esc(pronomi[persona]||'Delegato RSU')+' in ascolto attento e professionale"><figcaption><b>'+esc(pronomi[persona]||'Delegato RSU')+'</b><span>Ascolto e verifica dei fatti</span></figcaption></figure>'+
+ '</div><div class="rsu-art-bottom"><div class="rsu-art-description"><strong>'+esc(caso.ruolo)+'</strong><small>'+esc(intro)+'</small><small class="rsu-visual-nota">La RSU raccoglie i fatti, consulta i documenti e non anticipa promesse.</small></div>'+
  '<div class="rsu-art-meters">'+d.metrics.map(meter).join('')+'</div></div></section>';
 }
 function stage(s){
